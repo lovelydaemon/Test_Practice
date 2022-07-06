@@ -1,5 +1,5 @@
 import pytest
-from main import get_first_index
+from task_01 import get_first_index
 
 
 ar1 = '111111111110000000000000000'
