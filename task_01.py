@@ -51,22 +51,16 @@ class Rectangle:
 
 def are_intersect_x(rect1:Rectangle, rect2:Rectangle) -> bool:
     """Return True if rectangles intersect on X-axis, otherwise False"""
-    if rect2.len_x > rect1.len_x:
-        rect1, rect2 = rect2, rect1
-    min_point = rect1.min_x
-    max_point = rect1.max_x
-    return min_point <= rect2.min_x <= max_point or \
-            min_point <= rect2.max_x <= max_point
+    start = max(rect1.min_x, rect2.min_x)
+    end = min(rect1.max_x, rect2.max_x)
+    return end - start >= 0
 
 
 def are_intersect_y(rect1:Rectangle, rect2:Rectangle) -> bool:
     """Return True if rectangles intersect on Y-axis, otherwise False"""
-    if rect2.len_y > rect1.len_y:
-        rect1, rect2 = rect2, rect1
-    min_point = rect1.min_y
-    max_point = rect1.max_y
-    return min_point <= rect2.min_y <= max_point or \
-            min_point <= rect2.max_y <= max_point
+    start = max(rect1.min_y, rect2.min_y)
+    end = min(rect1.max_y, rect2.max_y)
+    return end - start >= 0
 
 
 def are_intersect(rect1:Rectangle, rect2:Rectangle) -> bool:
@@ -103,7 +97,7 @@ if __name__ == '__main__':
     rect1 = Rectangle(Point(-5,2), Point(3,-2))
     rect2 = Rectangle(Point(0,6), Point(5,1))
     rect3 = Rectangle(Point(1,1), Point(2,2))
-    rect4 = Rectangle(Point(3,3), Point(4,4))
+    rect4 = Rectangle(Point(2,2), Point(4,4))
     rect5 = Rectangle(Point(0,0), Point(1,1))
 
     print(are_intersect(rect1, rect2), area(rect1, rect2))

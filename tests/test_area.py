@@ -22,5 +22,5 @@ class TestArea:
         assert area(rect1, rect11) == 1
 
     def test_area_borders(self):
-        """Rectangles intersect but only by their borders"""
+        """Rectangles intersect by their borders"""
         assert area(rect1, rect12) == 0

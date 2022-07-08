@@ -7,6 +7,7 @@ rect4 = Rectangle(Point(3,-1), Point(6,2))
 rect5 = Rectangle(Point(3,-8), Point(6,-10))
 rect6 = Rectangle(Point(-1,-8), Point(-3,-10))
 rect7 = Rectangle(Point(4,0), Point(5,1))
+rect8 = Rectangle(Point(0,0), Point(1,1))
 
 class TestIntersectX:
     """Intersection on X-axis"""
@@ -22,6 +23,10 @@ class TestIntersectX:
         """Rectangles have the same length on X-axis"""
         assert are_intersect_x(rect4, rect5) == True
 
+    def test_x_intersect_borders(self):
+        """Rectangles intersect by their borders on X-axis"""
+        assert are_intersect_x(rect1, rect8) == True
+
 
 class TestIntersectY:
     """Intersection on Y-axis"""
@@ -36,6 +41,10 @@ class TestIntersectY:
     def test_y_intersect_equal(self):
         """Rectangles have the same length on Y-axis"""
         assert are_intersect_y(rect5, rect6) == True
+
+    def test_y_intersect_borders(self):
+        """Rectangles intersect by their borders on Y-axis"""
+        assert are_intersect_y(rect1, rect8) == True
 
 
 class TestIntersect:

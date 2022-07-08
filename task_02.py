@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
+
 headers = {
     'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
     'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
@@ -10,40 +11,69 @@ def find_next_page(current_page) -> str:
     """Return the next page URN"""
     return current_page.find_all('a', text='Следующая страница')[-1].get('href')
 
-def get_data(headers:dict|None) -> dict:
-    """Return the dictionary with count of animals"""
-    data = {}
-    URL_BASE = 'https://ru.wikipedia.org'
-    page_urn = '/w/index.php?title=%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F%3A%D0%96%D0%B8%D0%B2%D0%BE%D1%82%D0%BD%D1%8B%D0%B5_%D0%BF%D0%BE_%D0%B0%D0%BB%D1%84%D0%B0%D0%B2%D0%B8%D1%82%D1%83&from=%D0%90'
-    page_counter = 0
+def find_all_pages(url, headers) -> list:
+    """Return pages А-Я and A-Z"""
+    pages = []
+    response = requests.get(url=url, headers=headers)
+    try:
+        response.raise_for_status()
+    except requests.HTTPError as e:
+        print(e)
+        return pages
+
+    soup = BeautifulSoup(response.text, 'lxml')
+    links = soup.find('table', class_='plainlinks').find_all('a')
+    for item in links[2:]:
+        pages.append(item.get('href'))
+    return pages
+
+def get_data(url_base, url, headers):
+    """Return first character of animals and their count"""
+    char = ''
+    total = 0
     while True:
-        response = requests.get(f'{URL_BASE}{page_urn}', headers=headers)
+        response = requests.get(url=url, headers=headers)
         try:
             response.raise_for_status()
         except requests.HTTPError as e:
             print(e)
             break
 
-        page_counter += 1
-        # print(f'Getting data from page: {page_counter}')
-
         soup = BeautifulSoup(response.text, 'lxml')
         page = soup.find(id='mw-pages')
-        names_list = page.find_all('div', class_='mw-category-group')
-        for item in names_list:
-            ch = item.find('h3').string
-            count = len(item.find_all('li'))
-            data[ch] = data.get(ch, 0) + count
+        names_list = page.find('div', class_='mw-category-group')
+        next_char = names_list.h3.string
+
+        if not char: char = next_char
+        if next_char != char: break
+
+        total += len(names_list.find_all('li'))
 
         try:
-            page_urn = find_next_page(page)
+            url = f'{url_base}{find_next_page(page)}'
         except:
             break
+    return char, total
+
+
+def fetch(headers:dict|None) -> dict:
+    """Return the dictionary with count of animals"""
+    data = {}
+    URL_BASE = 'https://ru.wikipedia.org'
+    START_POINT = f'{URL_BASE}/wiki/Категория:Животные_по_алфавиту'
+
+    pages_for_searching = find_all_pages(START_POINT, headers)
+
+    for page in pages_for_searching:
+        ch, count = get_data(URL_BASE, page, headers)
+        data[ch] = count
+
     return data
 
 
 if __name__ == '__main__':
-    data = get_data(headers)
-    print(data)
+    data = fetch(headers)
+    for k, v in data.items():
+        print(k, v)
     print(sum(data.values()))
-# Result in 58s
+# Result in 50s - 2m
