@@ -48,8 +48,7 @@ async def get_data(url, session) -> tuple[str, int]:
 
         try:
             url = page.xpath('.//a[contains(text(), "Следующая страница")]/@href')[0]
-        except Exception as e:
-            print(e)
+        except:
             break
     return char, total
 

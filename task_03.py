@@ -14,14 +14,9 @@ def are_intersect(lesson: Interval, interval: Interval) -> bool:
     return end - start >= 0
 
 
-def filter_interval(lesson: Interval, intervals: list) -> list[Interval]:
+def filter_interval(lesson: Interval, intervals: list[Interval]) -> list[Interval]:
     """Return the list of intervals that intersect lesson"""
-    filtered_intervals = []
-    for interval in intervals:
-        if are_intersect(lesson, interval):
-            filtered_intervals.append(interval)
-
-    return filtered_intervals
+    return [interval for interval in intervals if are_intersect(lesson, interval)]
 
 
 def transform(intervals: list) -> list[Interval]:
