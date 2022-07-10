@@ -6,13 +6,15 @@ class Interval:
     start: int
     end: int
 
-def are_intersect(lesson:Interval, interval:Interval) -> bool:
+
+def are_intersect(lesson: Interval, interval: Interval) -> bool:
     """Return True if interval intersects lesson"""
     start = max(lesson.start, interval.start)
     end = min(lesson.end, interval.end)
     return end - start >= 0
 
-def filter_interval(lesson:Interval, intervals:list) -> list[Interval]:
+
+def filter_interval(lesson: Interval, intervals: list) -> list[Interval]:
     """Return the list of intervals that intersect lesson"""
     filtered_intervals = []
     for interval in intervals:
@@ -21,7 +23,8 @@ def filter_interval(lesson:Interval, intervals:list) -> list[Interval]:
 
     return filtered_intervals
 
-def transform(intervals:list) -> list[Interval]:
+
+def transform(intervals: list) -> list[Interval]:
     """Return transformed list of intervals"""
     new_intervals = []
     for index, value in enumerate(intervals):
@@ -56,7 +59,7 @@ tests = [
         'pupil': [1594663340, 1594663389, 1594663390, 1594663395, 1594663396, 1594666472],
         'tutor': [1594663290, 1594663430, 1594663443, 1594666473]
         },
-    'answer': 3117
+        'answer': 3117
     },
 
     # Убрал кривые интервалы из pupil

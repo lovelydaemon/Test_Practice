@@ -7,6 +7,7 @@ class Point:
     x: int
     y: int
 
+
 class Rectangle:
     def __init__(self, point1: Point, point2: Point) -> None:
         """Creates a rectangle using 2 opposite points"""
@@ -73,7 +74,8 @@ def are_intersect(rect1: Rectangle, rect2: Rectangle) -> bool:
 
 def area(rect1: Rectangle, rect2: Rectangle) -> int:
     """Return the area of the rectangles"""
-    if not are_intersect(rect1, rect2): return 0
+    if not are_intersect(rect1, rect2):
+        return 0
     left_x = max(rect1.min_x, rect2.min_x)
     left_y = max(rect1.min_y, rect2.min_y)
     right_x = min(rect1.max_x, rect2.max_x)
