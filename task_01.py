@@ -8,7 +8,7 @@ class Point:
     y: int
 
 class Rectangle:
-    def __init__(self, point1:Point, point2:Point) -> None:
+    def __init__(self, point1: Point, point2: Point) -> None:
         """Creates a rectangle using 2 opposite points"""
         self.point1 = point1
         self.point2 = point2
@@ -49,21 +49,21 @@ class Rectangle:
         return self.len_x * self.len_y
 
 
-def are_intersect_x(rect1:Rectangle, rect2:Rectangle) -> bool:
+def are_intersect_x(rect1: Rectangle, rect2: Rectangle) -> bool:
     """Return True if rectangles intersect on X-axis, otherwise False"""
     start = max(rect1.min_x, rect2.min_x)
     end = min(rect1.max_x, rect2.max_x)
     return end - start >= 0
 
 
-def are_intersect_y(rect1:Rectangle, rect2:Rectangle) -> bool:
+def are_intersect_y(rect1: Rectangle, rect2: Rectangle) -> bool:
     """Return True if rectangles intersect on Y-axis, otherwise False"""
     start = max(rect1.min_y, rect2.min_y)
     end = min(rect1.max_y, rect2.max_y)
     return end - start >= 0
 
 
-def are_intersect(rect1:Rectangle, rect2:Rectangle) -> bool:
+def are_intersect(rect1: Rectangle, rect2: Rectangle) -> bool:
     """Return True if rectangles intersect, otherwise False"""
     if not are_intersect_x(rect1, rect2) or \
         not are_intersect_y(rect1, rect2):
@@ -71,7 +71,7 @@ def are_intersect(rect1:Rectangle, rect2:Rectangle) -> bool:
     return True
 
 
-def area(rect1:Rectangle, rect2:Rectangle) -> int:
+def area(rect1: Rectangle, rect2: Rectangle) -> int:
     """Return the area of the rectangles"""
     if not are_intersect(rect1, rect2): return 0
     left_x = max(rect1.min_x, rect2.min_x)
@@ -82,7 +82,7 @@ def area(rect1:Rectangle, rect2:Rectangle) -> int:
     return new_rect.area
 
 
-def get_first_index(array:str) -> int:
+def get_first_index(array: str) -> int:
     """Return the lowest index of 0"""
     if not isinstance(array, str):
         raise TypeError('array must be str')
@@ -94,11 +94,11 @@ def get_first_index(array:str) -> int:
 
 
 if __name__ == '__main__':
-    rect1 = Rectangle(Point(-5,2), Point(3,-2))
-    rect2 = Rectangle(Point(0,6), Point(5,1))
-    rect3 = Rectangle(Point(1,1), Point(2,2))
-    rect4 = Rectangle(Point(2,2), Point(4,4))
-    rect5 = Rectangle(Point(0,0), Point(1,1))
+    rect1 = Rectangle(Point(-5, 2), Point(3, -2))
+    rect2 = Rectangle(Point(0, 6), Point(5, 1))
+    rect3 = Rectangle(Point(1, 1), Point(2, 2))
+    rect4 = Rectangle(Point(2, 2), Point(4, 4))
+    rect5 = Rectangle(Point(0, 0), Point(1, 1))
 
     print(are_intersect(rect1, rect2), area(rect1, rect2))
     print(are_intersect(rect3, rect4), area(rect3, rect4))
