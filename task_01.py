@@ -84,17 +84,6 @@ def area(rect1: Rectangle, rect2: Rectangle) -> int:
     return new_rect.area
 
 
-def get_first_index(array: str) -> int:
-    """Return the lowest index of 0"""
-    if not isinstance(array, str):
-        raise TypeError('array must be str')
-
-    if not array.isdecimal():
-        raise ValueError('string contains not only numbers')
-    return array.index('0')
-
-
-
 if __name__ == '__main__':
     rect1 = Rectangle(Point(-5, 2), Point(3, -2))
     rect2 = Rectangle(Point(0, 6), Point(5, 1))
@@ -104,5 +93,3 @@ if __name__ == '__main__':
 
     print(are_intersect(rect1, rect2), area(rect1, rect2))
     print(are_intersect(rect3, rect4), area(rect3, rect4))
-
-    print(get_first_index('111100000000000'))
